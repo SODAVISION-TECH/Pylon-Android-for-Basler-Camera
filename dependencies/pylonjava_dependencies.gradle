@@ -1,0 +1,6 @@
+//
+// refer to the additional needed AAR files for pylon java 
+// also include the pyloncpp_dependencies.gradle
+//
+configurations.maybeCreate("default")
+artifacts.add("default", file('./aar/pylonjava.aar'))
