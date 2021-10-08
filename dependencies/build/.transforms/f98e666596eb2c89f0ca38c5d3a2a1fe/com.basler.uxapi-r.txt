@@ -1,0 +1,2 @@
+com.basler.uxapi
+xml basler_usb_device_filter

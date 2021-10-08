@@ -1,0 +1,12 @@
+rootProject.name = "PylonAndroid"
+include ':app'
+
+// We have to tell the IDE where to find the pylon SDK.
+gradle.ext.PYLON_SDK_ROOT_DIR = file('dependencies').getAbsolutePath().replace('\\','/')
+include ':pyloncpp_dependencies'
+project(':pyloncpp_dependencies').projectDir =  file(gradle.ext.PYLON_SDK_ROOT_DIR)
+project(':pyloncpp_dependencies').buildFileName = 'pyloncpp_dependencies.gradle'
+
+include ':pylonjava_dependencies'
+project(':pylonjava_dependencies').projectDir =  file(gradle.ext.PYLON_SDK_ROOT_DIR)
+project(':pylonjava_dependencies').buildFileName = 'pylonjava_dependencies.gradle'

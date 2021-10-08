@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <!--ace1-->
+    <usb-device vendor-id="9846" product-id="47618"/>
+    <!--dart-->
+    <usb-device vendor-id="9846" product-id="47619"/>
+    <!--pulse-->
+    <usb-device vendor-id="9846" product-id="47620"/>
+    <!--ace2-->
+    <usb-device vendor-id="9846" product-id="47621"/>
+    <!--dart2-->
+    <usb-device vendor-id="9846" product-id="47622"/>
+    <!--for future products-->
+    <usb-device vendor-id="9846" product-id="47623"/>
+    <usb-device vendor-id="9846" product-id="47624"/>
+    <usb-device vendor-id="9846" product-id="47625"/>
+    <usb-device vendor-id="9846" product-id="47626"/>
+</resources>

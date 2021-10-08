@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:id="@+id/fullScreenLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/fullScreenLiveView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType = "fitCenter"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/settingViewLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/windowsLiveViewImageView"
+                android:layout_width="match_parent"
+                android:layout_height="230dp"
+                android:padding="5dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/staticPixelFormatTextView"
+                android:layout_width="160dp"
+                android:layout_height="match_parent"
+                android:text="Pixel Format :"
+                android:visibility="visible" />
+
+            <Spinner
+                android:id="@+id/pixelFormatSpinner"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/staticCompressionFormatTextView"
+                android:layout_width="160dp"
+                android:layout_height="match_parent"
+                android:text="Output Format :"/>
+
+            <Spinner
+                android:id="@+id/compressionFormatSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:entries="@array/spinner_save_image_items" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/staticFrameRateTextView"
+                android:layout_width="160dp"
+                android:layout_height="match_parent"
+                android:text="Frame Rate :"/>
+
+            <TextView
+                android:id="@+id/frameRateTextView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="#000000"
+                android:text=""/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/staticAcquisitionFrameRateTextView"
+                android:layout_width="160dp"
+                android:layout_height="match_parent"
+                android:text="Acquisition Frame Rate :"/>
+
+            <CheckBox
+                android:id="@+id/acquisitionFrameRateCheckBox"
+                android:layout_width="30dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center" />
+
+            <EditText
+                android:id="@+id/acquisitionFrameRateEditText"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:inputType="number"
+                android:textSize="14dp"
+                android:textColor="#000000"/>
+
+            <Button
+                android:id="@+id/acquisitionFrameConfirmButton"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:text="Confirm"
+                android:textSize="9dp"
+                android:onClick="acquisitionFrameButton_OnClick"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/staticExposureTimeTextView"
+                android:layout_width="160dp"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:textSize="14dp"
+                android:text="Exposure Time [us] :"/>
+
+            <TextView
+                android:id="@+id/exposureTimeTextView"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center|left"
+                android:textSize="14dp"
+                android:textColor="#000000"
+                android:text=""/>
+
+            <Spinner
+                android:id="@+id/exposureTimeSpinner"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textSize="5dp"
+                android:entries="@array/spinner_exposure_time_items" />
+
+        </LinearLayout>
+
+        <SeekBar
+            android:id="@+id/exposureTimeSeekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:max="1000"
+            android:progress="0"
+            android:indeterminate="false" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/staticGainTextView"
+                android:layout_width="160dp"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:textSize="14dp"
+                android:text="Gain [dB] :"/>
+
+            <TextView
+                android:id="@+id/gainTextView"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center|left"
+                android:textSize="14dp"
+                android:textColor="#000000"
+                android:text=""/>
+
+            <Spinner
+                android:id="@+id/gainSpinner"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textSize="5dp"
+                android:entries="@array/spinner_gain_items" />
+
+        </LinearLayout>
+
+        <SeekBar
+            android:id="@+id/gainSeekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:max="1000"
+            android:progress="0"
+            android:indeterminate="false" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/staticWhiteBalanceTextView"
+                android:layout_width="160dp"
+                android:layout_height="match_parent"
+                android:text="Balance White :"
+                android:visibility="visible" />
+
+            <Spinner
+                android:id="@+id/balanceWhiteSpinner"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:entries="@array/spinner_balance_white_items"/>
+
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/saveImageButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:onClick="saveImageButton_OnClick"
+            android:text="Save Camera Image" />
+
+        <Button
+            android:id="@+id/liveButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:onClick="liveButton_OnClick"
+            android:text="Live" />
+
+        <Button
+            android:id="@+id/stopCaptureButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:onClick="stopCaptureButton_OnClick"
+            android:text="Stop Capture" />
+
+        <Button
+            android:id="@+id/exitButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="true"
+            android:onClick="exitButton_OnClick"
+            android:text="Exit" />
+
+        <TextView
+            android:id="@+id/logTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:textSize="12sp"
+            android:typeface="monospace"
+            android:scrollbars="horizontal|vertical" />
+
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fullScreenButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:backgroundTint="#04294b"
+        app:borderWidth="0dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="20dp"
+        android:alpha="0.7"
+        android:onClick="fullScreenButton_OnClick"/>
+
+</RelativeLayout>
