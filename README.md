@@ -8,11 +8,12 @@ Basler pylon sample code for Android application
 This demo application has been built using the following tools:
 
     BuildToolsVersion: 29.0.3
-    NDK:               21.0.6113669
+    NDK:               23.0.7599858
     MinSdkVersion:     26
     TargetSdkVersion:  29
-    Gradle Plugin:     3.6.2
-    Gradle:            5.6.4
+    Gradle Plugin:     4.2.2
+    Gradle:            6.7.1
+    CMake:             3.18.1
    
 # RESTRICTIONS
 
