@@ -1,2 +1,0 @@
-com.basler.pylonbase
-xml basler_usb_device_filter

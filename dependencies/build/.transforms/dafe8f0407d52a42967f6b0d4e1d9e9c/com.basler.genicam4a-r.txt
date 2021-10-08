@@ -1,1 +1,0 @@
-com.basler.genicam4a
