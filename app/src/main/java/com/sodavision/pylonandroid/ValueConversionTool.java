@@ -16,7 +16,7 @@ public class ValueConversionTool {
 
     /**
      * convert the SeekBar Value to exposure time or gain value
-     * when maxvalue > boundary value, SeekBar value range will be always from 0 to 1000
+     * when maxvalue <= boundary value, SeekBar value range will be always from 0 to 1000
      * if boundary value < maxvalue <= 20000, SeekBar value will be directly convert to camera value
      * according to the ratio of camera value range to SeekBar value range
      * if 20000 < maxvalue <= 200000, the half of SeekBar value range (0 to 500) will be mapped to the camera value range

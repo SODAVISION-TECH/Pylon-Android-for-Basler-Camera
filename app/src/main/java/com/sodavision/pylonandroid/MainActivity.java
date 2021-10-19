@@ -565,6 +565,8 @@ public class MainActivity extends AppCompatActivity implements LogTarget {
 
     /**
      * this part is for setting the range of seekbar
+     * if maximum value > BOUNDARY_VALUE, SeekBar value range will be from minimum value to maximum value
+     * else it will be always from 0 to BOUNDARY_VALUE
      **/
     private void gainAndExposureTimeInitialization()
     {
