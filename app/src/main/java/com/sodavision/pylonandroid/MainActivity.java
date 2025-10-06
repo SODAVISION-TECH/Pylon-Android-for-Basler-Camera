@@ -46,6 +46,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class MainActivity extends AppCompatActivity implements LogTarget {
     private static final int        PERMISSION_STORAGE_REQUEST = 0xBAce;
+    private static final int        PERMISSION_CAMERA_REQUEST = 0xBAcf;
     private static final String     LOG_TAG ="PylonAndroid";
 
     private boolean isStopGrabbingImage = true;
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements LogTarget {
     private String                  m_RootPathPictures = null;
     private AtomicBoolean           m_isCameraValid = new AtomicBoolean(false);
     private AtomicBoolean           m_isStoragePermissionGrant = new AtomicBoolean(false);
+    private AtomicBoolean           m_isCameraPermissionGrant = new AtomicBoolean(false);
     private AtomicBoolean           m_isOnDestroyCalled = new AtomicBoolean(false);
     private Bitmap.CompressFormat   m_CurrentCompressFormat = Bitmap.CompressFormat.JPEG;
 
@@ -662,7 +664,7 @@ public class MainActivity extends AppCompatActivity implements LogTarget {
     {
         boolean tmpState = newUIState;
 
-        if( !m_isCameraValid.get() || !m_isStoragePermissionGrant.get() || m_isOnDestroyCalled.get())
+        if( !m_isCameraValid.get() || !m_isStoragePermissionGrant.get() || !m_isCameraPermissionGrant.get() || m_isOnDestroyCalled.get())
         {
             tmpState = false;
         }
@@ -675,19 +677,42 @@ public class MainActivity extends AppCompatActivity implements LogTarget {
         balanceWhiteSpinner.setEnabled(tmpState);
     }
 
-    /** Request rights to access pictures folder. This can be asynchronous.
+    /** Request rights to access pictures folder and camera. This can be asynchronous.
      **/
     private void requestRights()
     {
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED )
+        // Check camera permission
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED )
         {
-            Log(LogLevel.Info,"Asking for permission to write access EXTERNAL_STORAGE");
-            String[] permission = new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE};
-            ActivityCompat.requestPermissions(this,permission,PERMISSION_STORAGE_REQUEST) ;
+            Log(LogLevel.Info,"Asking for permission to access CAMERA");
+            String[] permission = new String[] {Manifest.permission.CAMERA};
+            ActivityCompat.requestPermissions(this,permission,PERMISSION_CAMERA_REQUEST) ;
         }
         else {
-            Log(LogLevel.Info,"Permission to write EXTERNAL_STORAGE already granted");
+            Log(LogLevel.Info,"Permission to access CAMERA already granted");
+            m_isCameraPermissionGrant.set(true);
+        }
+        
+        // Check storage permission (only for older Android versions)
+        if(android.os.Build.VERSION.SDK_INT <= 32) {
+            if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED )
+            {
+                Log(LogLevel.Info,"Asking for permission to write access EXTERNAL_STORAGE");
+                String[] permission = new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                ActivityCompat.requestPermissions(this,permission,PERMISSION_STORAGE_REQUEST) ;
+            }
+            else {
+                Log(LogLevel.Info,"Permission to write EXTERNAL_STORAGE already granted");
+                m_isStoragePermissionGrant.set(true);
+            }
+        } else {
+            // For Android 13+, we don't need WRITE_EXTERNAL_STORAGE permission
+            Log(LogLevel.Info,"Android 13+ detected, no WRITE_EXTERNAL_STORAGE permission needed");
             m_isStoragePermissionGrant.set(true);
+        }
+        
+        // Check if all permissions are granted
+        if(m_isCameraPermissionGrant.get() && m_isStoragePermissionGrant.get()) {
             tryChangeEnableUIState(true);
         }
     }
@@ -716,7 +741,7 @@ public class MainActivity extends AppCompatActivity implements LogTarget {
     }
 
     /** Callback for rights request.
-     *  Called after request for external storage was answered by user.
+     *  Called after request for permissions was answered by user.
      **/
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissionsRequested, @NonNull int[] requestResults)
@@ -725,12 +750,25 @@ public class MainActivity extends AppCompatActivity implements LogTarget {
         if( requestCode == PERMISSION_STORAGE_REQUEST ) {
             if(requestResults.length > 0 && requestResults[0] == PackageManager.PERMISSION_GRANTED ) {
                 m_isStoragePermissionGrant.set(true);
-                tryChangeEnableUIState(true);
                 Log(LogLevel.Info,"User granted access to external storage");
             }
             else {
                 Log( LogLevel.Error, "User declined request for permission to write to external storage");
             }
+        }
+        else if( requestCode == PERMISSION_CAMERA_REQUEST ) {
+            if(requestResults.length > 0 && requestResults[0] == PackageManager.PERMISSION_GRANTED ) {
+                m_isCameraPermissionGrant.set(true);
+                Log(LogLevel.Info,"User granted access to camera");
+            }
+            else {
+                Log( LogLevel.Error, "User declined request for permission to access camera");
+            }
+        }
+        
+        // Check if all permissions are granted
+        if(m_isCameraPermissionGrant.get() && m_isStoragePermissionGrant.get()) {
+            tryChangeEnableUIState(true);
         }
     }
 
